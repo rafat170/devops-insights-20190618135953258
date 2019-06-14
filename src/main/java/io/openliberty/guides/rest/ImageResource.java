@@ -2,10 +2,12 @@ package io.openliberty.guides.rest;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -20,6 +22,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.io.IOUtils;
 import org.bson.Document;
+import org.bson.json.JsonMode;
+import org.bson.json.JsonWriterSettings;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -77,8 +81,12 @@ public class ImageResource
                System.out.println("ignore");
                continue;
             }
-            // FIXME: create POJO
-            results.add(doc.toJson());
+            JsonWriterSettings settings = JsonWriterSettings.builder().outputMode(JsonMode.RELAXED).build();
+            String jsonString = doc.toJson(settings);
+            try (JsonReader jsonReader = Json.createReader(new StringReader(jsonString)))
+            {
+               results.add(jsonReader.readObject());
+            }
          }
       }
       return Response.status(Status.OK).entity(results.build()).build();
