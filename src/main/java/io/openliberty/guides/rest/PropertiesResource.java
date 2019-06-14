@@ -1,15 +1,3 @@
-// tag::comment[]
-/*******************************************************************************
- * Copyright (c) 2017 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     IBM Corporation - initial API and implementation
- *******************************************************************************/
- // end::comment[]
 package io.openliberty.guides.rest;
 
 import javax.json.Json;
@@ -20,25 +8,22 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-// tag::class[]
 @Path("properties")
-public class PropertiesResource {
-// end::class[]
+public class PropertiesResource
+{
+   @GET
+   @Produces(MediaType.APPLICATION_JSON)
+   public JsonObject getProperties()
+   {
 
-    // tag::getProperties[]
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public JsonObject getProperties() {
+      JsonObjectBuilder builder = Json.createObjectBuilder();
 
-        JsonObjectBuilder builder = Json.createObjectBuilder();
+      System
+         .getProperties()
+         .entrySet()
+         .stream()
+         .forEach(entry -> builder.add((String) entry.getKey(), (String) entry.getValue()));
 
-        System.getProperties()
-              .entrySet()
-              .stream()
-              .forEach(entry -> builder.add((String)entry.getKey(),
-                                            (String)entry.getValue()));
-
-       return builder.build();
-    }
-    // end::getProperties[]
+      return builder.build();
+   }
 }
