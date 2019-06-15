@@ -8,7 +8,7 @@
 #### Run MongoDB
 - `docker run -p 32768:27017 --name some-mongo -d mongo:latest`
 
-### Run MongoDB Dashboard
+#### Run MongoDB Dashboard (optional)
 - `docker run -it --rm -p 8081:8081 --link some-mongo:mongo mongo-express`
 
 ---
