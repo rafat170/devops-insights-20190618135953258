@@ -26,9 +26,12 @@ Required parameters:
 - lat -- Latitude value (required, if not using `origin`)
 - lng -- Longitude value (required, if not using `origin`)
 
-POST /LibertyProject/System/images?timestamp=12345&origin=43.819612,-79.324298
-
-curl -X POST   'http://localhost:9080/LibertyProject/System/images?timestamp=12345&origin=43.819612,-79.324298'   -H 'Content-Type: image/jpeg'   --data-binary @/Users/wasifk/Desktop/flood.jpg
+```
+curl -X POST  \
+  'http://localhost:9080/LibertyProject/System/images?timestamp=12345&origin=43.819612,-79.324298' \
+  -H 'Content-Type: image/jpeg' \
+  --data-binary @/Users/wasifk/Desktop/flood.jpg
+```
 
 #### GET /images
 
@@ -39,8 +42,8 @@ Optional parameters:
 - bounds -- Either a single latitude and longitude value pair, or double. Pairs are separated by `|`. Single pair expected when using `radius` parameter. If `radius` parameter is not provided, bounds is expected to have 2 pairs to create a rectangular bounded region. Example: `bounds=43.11234,88.45334` (single pair), `bounds=43.55645,-90.45321|38.12389,-80.33212` (double pair)
 - radius -- In meters. Radius combined with bounds (single pair) determine a bounded region for images returned.
 
-GET /LibertyProject/System/images?includeImage=false&bounds=43.819612,-79.324298&radius=100000
-
+```
 curl -X GET \
   'http://localhost:9080/LibertyProject/System/images?includeImage=false&bounds=43.819612,-79.324298&radius=100000'
+```
 
